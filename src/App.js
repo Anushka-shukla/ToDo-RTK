@@ -1,23 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToDoItem } from './slice/todoSlice';
+import { useState } from 'react';
 
 function App() {
+  const todo = useSelector((state) => state.todo.todoList);
+  const dispatch = useDispatch();
+
+  const [input, setInput] = useState("");
+  const [todoItem, setToDoItemInList] = useState("");
+
+  const handleInputTask=(e)=>{
+    setInput(e.target.value);
+  };
+
+  const handleAddBtnClick=()=>{
+    
+  };
+
+  console.log(todo)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="todo-header">
+        List down 📝
       </header>
+      <div>
+        <ul>
+          {todo.map((item)=>(<li>{item.taskName}</li>))}
+        </ul>
+        <label>Add new to do item</label>
+        <input value={input} onChange={handleInputTask}/>
+        <button className="add-todo" onClick = {()=>
+          dispatch(addToDoItem(input))
+        }>+</button>
+      </div>
     </div>
   );
 }
