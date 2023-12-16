@@ -1,6 +1,6 @@
 import './App.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToDoItem } from './slice/todoSlice';
+import { addToDoItem, updateTodoItem } from './slice/todoSlice';
 import { useState } from 'react';
 
 function App() {
@@ -9,13 +9,11 @@ function App() {
 
   const [input, setInput] = useState("");
   const [todoItem, setToDoItemInList] = useState("");
+ 
 
-  const handleInputTask=(e)=>{
+  const handleInputTask = (e) => {
     setInput(e.target.value);
-  };
 
-  const handleAddBtnClick=()=>{
-    
   };
 
   console.log(todo)
@@ -26,16 +24,31 @@ function App() {
       </header>
       <div>
         <ul>
-          {todo.map((item)=>(<li>{item.taskName}</li>))}
+        {/* controlled input and uncrolled input */}
+          {todo.map((item, index) => (<li key={index}> <input type='checkbox' value={item.status} onChange={() => dispatch(updateTodoItem(index))} /> {item.taskName}</li>))}
         </ul>
         <label>Add new to do item</label>
-        <input value={input} onChange={handleInputTask}/>
-        <button className="add-todo" onClick = {()=>
-          dispatch(addToDoItem(input))
-        }>+</button>
+
+        <input value={input} onChange={handleInputTask} />
+
+        <button className="add-todo" onClick={() => {
+          dispatch(addToDoItem(input)); 
+          setInput("");
+        }} disabled={input ? false : true}
+        >+</button>
       </div>
     </div>
   );
 }
 
 export default App;
+
+
+// handling of empty data  --
+// clearinh input field after adding the task --
+// marking done for the task --
+// UI
+// upon refesh kuch na ude
+// delete the task
+// cross off the task
+

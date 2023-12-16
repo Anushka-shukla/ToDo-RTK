@@ -9,11 +9,14 @@ export const todoSlice = createSlice({
         addToDoItem: (state, action)=>{
             state.todoList = state.todoList.concat({taskName: action.payload, status: false})
 
-        }
-        
-        // updateTodoItem: (state)=>{
+        },
+        // when the user has completed the task 
+        updateTodoItem: (state, action)=>{
+            // console.log(action.payload);
+            // console.log(state.todoList[action.payload].status)
+            state.todoList[action.payload].status = !state.todoList[action.payload].status;
 
-        // },
+        }
 
         // deleteTodo: (state)=>{
 
@@ -22,6 +25,6 @@ export const todoSlice = createSlice({
     }
 })
 
-export const { addToDoItem } = todoSlice.actions;
+export const { addToDoItem, updateTodoItem } = todoSlice.actions;
 
 export default todoSlice.reducer;
